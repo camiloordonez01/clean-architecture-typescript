@@ -9,6 +9,7 @@ declare global {
             PASSWORD_DB: string
             SCHEMA_DB: string | '3306'
             TIMEZONE: string
+            PORT?: number
         }
     }
 }

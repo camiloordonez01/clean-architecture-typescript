@@ -11,17 +11,18 @@ import { handleResponse, handleError, ErrorHandler } from '../handler'
 
 class Server {
     public app: Application
+    private port: number
 
     constructor() {
         this.app = express()
-        this.app.set('PORT', process.env.PORT || 3000)
+        this.port =  process.env.PORT ?? 3000
         this.routes()
         this.noFound()
         this.middleware()
     }
 
-    private middleware(): void {
-        this.app.use(cors({ methods: ['GET', 'POST'] }))
+    private middleware() {
+        this.app.use(cors({ methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'] }))
         this.app.use(express.json())
         this.app.use(express.urlencoded({ extended: false }))
 
@@ -34,19 +35,19 @@ class Server {
         )
     }
 
-    private routes(): void {
+    private routes() {
         this.app.use(RouterMain)
     }
 
-    listen(): void {
-        this.app.listen(this.app.get('PORT'), () =>
+    listen() {
+        this.app.listen(this.port, () =>
             console.log(
-                `Listening on: http://localhost:${this.app.get('PORT')}`
+                `Listening on: http://localhost:${this.port}`
             )
         )
     }
 
-    private noFound(): void {
+    private noFound() {
         // No Found
         this.app.use((req, res, next) => {
             try {

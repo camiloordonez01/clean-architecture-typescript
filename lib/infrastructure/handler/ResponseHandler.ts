@@ -2,7 +2,7 @@ import { Response, NextFunction } from 'express'
 import { handleError } from './ErrorHandler'
 
 class ResponseHandler {
-    statusCode: number
+    public readonly statusCode: number
 
     result: unknown
 
@@ -16,7 +16,7 @@ const handleResponse = (
     info: unknown | Error,
     res: Response,
     next: NextFunction
-): void => {
+) => {
     if (info instanceof Error) {
         handleError(info, res)
     } else if (info instanceof ResponseHandler) {
